@@ -1,0 +1,603 @@
+
+
+ahsan@vmmint:~/Project$ terraform console
+> max(10,20,30)
+30
+> min(10,20,30)
+10
+>  
+
+***
+> lookup({a="ay",b="bee"}, "a", "what?")
+"ay"
+> lookup({a="ay",b="bee"}, "b", "what?")
+"bee"
+> lookup({a="ay",b="bee"}, "z", "what?")
+"what?"
+>  
+
+ element(["a", "b", "c"], 1)
+"b"
+> element(["a", "b", "c"], 0)
+"a"
+> element(["a", "b", "c"], 2)
+"c"
+>  
+
+***
+ahsan@vmmint:~/Project$ cat terraform_function.tf 
+provider "aws" {
+  region     = "us-east-2"
+}
+
+locals {
+  time = formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())
+}
+
+variable "region" {
+  default = "us-east-2"
+}
+
+variable "tags" {
+  type = list
+  default = ["firstec2","secondec2"]
+}
+
+variable "ami" {
+  type = map
+  default = {
+ 
+"ca-central-1" =  "ami-0d8270d86f77e72b2"
+"us-east-1"    =  "ami-067d1e60475437da2"
+"us-east-2"    =  "ami-036f5574583e16426"
+
+  }
+}
+
+resource "aws_key_pair" "loginkey" {
+  key_name   = "login-key"
+  public_key = file("${path.module}/id_rsa.pub")
+}
+
+resource "aws_instance" "app-dev" {
+   ami = lookup(var.ami,var.region)
+   instance_type = "t2.micro"
+   key_name = aws_key_pair.loginkey.key_name
+   count = 2
+
+   tags = {
+     Name = element(var.tags,count.index)
+   }
+}
+
+
+output "timestamp" {
+  value = local.time
+}
+mahsan@vmmint:~/Project$ terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_instance.app-dev[0] will be created
+  + resource "aws_instance" "app-dev" {
+      + ami                                  = "ami-036f5574583e16426"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "login-key"
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "firstec2"
+        }
+      + tags_all                             = {
+          + "Name" = "firstec2"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
+    }
+
+  # aws_instance.app-dev[1] will be created
+  + resource "aws_instance" "app-dev" {
+      + ami                                  = "ami-036f5574583e16426"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "login-key"
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "secondec2"
+        }
+      + tags_all                             = {
+          + "Name" = "secondec2"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
+    }
+
+  # aws_key_pair.loginkey will be created
+  + resource "aws_key_pair" "loginkey" {
+      + arn             = (known after apply)
+      + fingerprint     = (known after apply)
+      + id              = (known after apply)
+      + key_name        = "login-key"
+      + key_name_prefix = (known after apply)
+      + key_pair_id     = (known after apply)
+      + key_type        = (known after apply)
+      + public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8qO8KcNnKUm04ZC7H5s0WyJwpo/bxG/kJovGUqSz6ViEAhVxC9Tq/piJ9Kk9IUEOkfAjY8Yr5zn9ThRbOVJ4AEHTjSwIie7YMMLjN+OdTn8+cqnfh9RNN3633ixGVP9CpbiDiB7gMsZ78Q2ps/gcxQuuW1XSt8Y0jcgHL0KJQsjU0eS7vhGCjRQ9snrgJxYg+UYM8dOWINhbiVTQbydHGjcYUMZv6cWxZDQPyejObcFsmDY7UcD4ZnuzG/1VaSh+fXjNzqK6TjoY7ajH3F6WVW1Nbh6F/4hJipmT4Q5TxK51s28PCYveWZypc66PTw2D1WHerCXQbuSnMlqpwip/f root@46400bafe371"
+      + tags_all        = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + timestamp = (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you
+run "terraform apply" now.
+mahsan@vmmint:~/Project$ terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_instance.app-dev[0] will be created
+  + resource "aws_instance" "app-dev" {
+      + ami                                  = "ami-036f5574583e16426"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "login-key"
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "firstec2"
+        }
+      + tags_all                             = {
+          + "Name" = "firstec2"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
+    }
+
+  # aws_instance.app-dev[1] will be created
+  + resource "aws_instance" "app-dev" {
+      + ami                                  = "ami-036f5574583e16426"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "login-key"
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "secondec2"
+        }
+      + tags_all                             = {
+          + "Name" = "secondec2"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
+    }
+
+  # aws_key_pair.loginkey will be created
+  + resource "aws_key_pair" "loginkey" {
+      + arn             = (known after apply)
+      + fingerprint     = (known after apply)
+      + id              = (known after apply)
+      + key_name        = "login-key"
+      + key_name_prefix = (known after apply)
+      + key_pair_id     = (known after apply)
+      + key_type        = (known after apply)
+      + public_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8qO8KcNnKUm04ZC7H5s0WyJwpo/bxG/kJovGUqSz6ViEAhVxC9Tq/piJ9Kk9IUEOkfAjY8Yr5zn9ThRbOVJ4AEHTjSwIie7YMMLjN+OdTn8+cqnfh9RNN3633ixGVP9CpbiDiB7gMsZ78Q2ps/gcxQuuW1XSt8Y0jcgHL0KJQsjU0eS7vhGCjRQ9snrgJxYg+UYM8dOWINhbiVTQbydHGjcYUMZv6cWxZDQPyejObcFsmDY7UcD4ZnuzG/1VaSh+fXjNzqK6TjoY7ajH3F6WVW1Nbh6F/4hJipmT4Q5TxK51s28PCYveWZypc66PTw2D1WHerCXQbuSnMlqpwip/f root@46400bafe371"
+      + tags_all        = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + timestamp = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_key_pair.loginkey: Creating...
+aws_key_pair.loginkey: Creation complete after 1s [id=login-key]
+aws_instance.app-dev[1]: Creating...
+aws_instance.app-dev[0]: Creating...
+aws_instance.app-dev[1]: Still creating... [10s elapsed]
+aws_instance.app-dev[0]: Still creating... [10s elapsed]
+aws_instance.app-dev[1]: Still creating... [20s elapsed]
+aws_instance.app-dev[0]: Still creating... [20s elapsed]
+aws_instance.app-dev[0]: Creation complete after 22s [id=i-003705c6bc05bd5a8]
+aws_instance.app-dev[1]: Still creating... [30s elapsed]
+aws_instance.app-dev[1]: Creation complete after 33s [id=i-00488bf369a40279b]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+timestamp = "09 Oct 2023 16:52 UTC"
+mahsan@vmmint:~/Project$ 
+
+***
+
+mahsan@vmmint:~/Project$ terraform destroy
+aws_key_pair.loginkey: Refreshing state... [id=login-key]
+aws_instance.app-dev[0]: Refreshing state... [id=i-003705c6bc05bd5a8]
+aws_instance.app-dev[1]: Refreshing state... [id=i-00488bf369a40279b]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_instance.app-dev[0] will be destroyed
+  - resource "aws_instance" "app-dev" {
+      - ami                                  = "ami-036f5574583e16426" -> null
+      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:instance/i-003705c6bc05bd5a8" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-2c" -> null
+      - cpu_core_count                       = 1 -> null
+      - cpu_threads_per_core                 = 1 -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-003705c6bc05bd5a8" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t2.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "login-key" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-0129d8f1aa87de6bb" -> null
+      - private_dns                          = "ip-172-31-35-3.us-east-2.compute.internal" -> null
+      - private_ip                           = "172.31.35.3" -> null
+      - public_dns                           = "ec2-18-222-151-32.us-east-2.compute.amazonaws.com" -> null
+      - public_ip                            = "18.222.151.32" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "default",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-0827b91bd9f405f68" -> null
+      - tags                                 = {
+          - "Name" = "firstec2"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "firstec2"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-04e04295a2cc4a9aa",
+        ] -> null
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 1 -> null
+        }
+
+      - credit_specification {
+          - cpu_credits = "standard" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/xvda" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-09086ac717338db54" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+        }
+    }
+
+  # aws_instance.app-dev[1] will be destroyed
+  - resource "aws_instance" "app-dev" {
+      - ami                                  = "ami-036f5574583e16426" -> null
+      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:instance/i-00488bf369a40279b" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-2c" -> null
+      - cpu_core_count                       = 1 -> null
+      - cpu_threads_per_core                 = 1 -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-00488bf369a40279b" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t2.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "login-key" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-032c774bcbd4a9f7f" -> null
+      - private_dns                          = "ip-172-31-33-15.us-east-2.compute.internal" -> null
+      - private_ip                           = "172.31.33.15" -> null
+      - public_dns                           = "ec2-52-14-180-237.us-east-2.compute.amazonaws.com" -> null
+      - public_ip                            = "52.14.180.237" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "default",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-0827b91bd9f405f68" -> null
+      - tags                                 = {
+          - "Name" = "secondec2"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "secondec2"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-04e04295a2cc4a9aa",
+        ] -> null
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 1 -> null
+        }
+
+      - credit_specification {
+          - cpu_credits = "standard" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/xvda" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-0f092c65f09432b39" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+        }
+    }
+
+  # aws_key_pair.loginkey will be destroyed
+  - resource "aws_key_pair" "loginkey" {
+      - arn         = "arn:aws:ec2:us-east-2:954854060441:key-pair/login-key" -> null
+      - fingerprint = "39:6d:54:ef:13:1a:b0:86:8e:e3:f2:f8:ac:fa:5b:67" -> null
+      - id          = "login-key" -> null
+      - key_name    = "login-key" -> null
+      - key_pair_id = "key-0bbca90999709e6c0" -> null
+      - key_type    = "rsa" -> null
+      - public_key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8qO8KcNnKUm04ZC7H5s0WyJwpo/bxG/kJovGUqSz6ViEAhVxC9Tq/piJ9Kk9IUEOkfAjY8Yr5zn9ThRbOVJ4AEHTjSwIie7YMMLjN+OdTn8+cqnfh9RNN3633ixGVP9CpbiDiB7gMsZ78Q2ps/gcxQuuW1XSt8Y0jcgHL0KJQsjU0eS7vhGCjRQ9snrgJxYg+UYM8dOWINhbiVTQbydHGjcYUMZv6cWxZDQPyejObcFsmDY7UcD4ZnuzG/1VaSh+fXjNzqK6TjoY7ajH3F6WVW1Nbh6F/4hJipmT4Q5TxK51s28PCYveWZypc66PTw2D1WHerCXQbuSnMlqpwip/f root@46400bafe371" -> null
+      - tags        = {} -> null
+      - tags_all    = {} -> null
+    }
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Changes to Outputs:
+  - timestamp = "09 Oct 2023 16:52 UTC" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_instance.app-dev[0]: Destroying... [id=i-003705c6bc05bd5a8]
+aws_instance.app-dev[1]: Destroying... [id=i-00488bf369a40279b]
+aws_instance.app-dev[0]: Still destroying... [id=i-003705c6bc05bd5a8, 10s elapsed]
+aws_instance.app-dev[1]: Still destroying... [id=i-00488bf369a40279b, 10s elapsed]
+aws_instance.app-dev[0]: Still destroying... [id=i-003705c6bc05bd5a8, 20s elapsed]
+aws_instance.app-dev[1]: Still destroying... [id=i-00488bf369a40279b, 20s elapsed]
+aws_instance.app-dev[0]: Still destroying... [id=i-003705c6bc05bd5a8, 30s elapsed]
+aws_instance.app-dev[1]: Still destroying... [id=i-00488bf369a40279b, 30s elapsed]
+aws_instance.app-dev[0]: Destruction complete after 31s
+aws_instance.app-dev[1]: Still destroying... [id=i-00488bf369a40279b, 40s elapsed]
+aws_instance.app-dev[1]: Destruction complete after 41s
+aws_key_pair.loginkey: Destroying... [id=login-key]
+aws_key_pair.loginkey: Destruction complete after 0s
+
+Destroy complete! Resources: 3 destroyed.
+mahsan@vmmint:~/Project$ 
+
+
+
