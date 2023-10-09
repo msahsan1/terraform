@@ -1,3 +1,4 @@
+[pre]
 mahsan@vmmint:~/Project$ cat terraform_debug.tf 
 provider "aws" {
   region     = "us-west-2"
@@ -429,4 +430,4 @@ mahsan@vmmint:/tmp$
 
 
 
-
+[/pre]
