@@ -1,3 +1,4 @@
+<pre>
 ahsan@vmmint:~/Project$ cat terreform_conditional_exp.tf
 provider "aws"  {
   region     = "us-east-2"
@@ -720,4 +721,4 @@ Destroy complete! Resources: 3 destroyed.
 mahsan@vmmint:~/Project$ 
 
 
-
+</pre>
