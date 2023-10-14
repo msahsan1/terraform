@@ -145,7 +145,8 @@ arns = [
 ]
 mahsan@vmmint:~/Project$ 
 
+<pre>
+
 ![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_splat_expression/ksnip_20231014-100559.png "msahsan1@gmail.com")
 
-<pre>
 
