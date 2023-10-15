@@ -347,3 +347,10 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 </pre>
 ![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103120.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103200.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103220.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103229.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103239.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-104643.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-110153.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-110234.png "msahsan1@gmail.com")
