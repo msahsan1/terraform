@@ -1,5 +1,5 @@
 <pre>
-<h1> S3 Bucket on Terraform </b>
+<h1> S3 Bucket on Terraform </h1>
 
 ahsan@vmmint:~/Project$ vim s3_bucket.tf
 mahsan@vmmint:~/Project$ cat s3_bucket.tf 
