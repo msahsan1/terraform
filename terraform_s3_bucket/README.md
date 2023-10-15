@@ -346,4 +346,4 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 
 </pre>
-
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103120.png "msahsan1@gmail.com")
