@@ -1,3 +1,5 @@
+<pre>
+<h1> Terraform Destroy </h1>
 ahsan@vmmint:~/Project$ terraform destroy -target aws_instance.myec2
 aws_instance.myec2: Refreshing state... [id=i-034e0d06fd5d57559]
 
@@ -111,5 +113,16 @@ Do you really want to destroy all resources?
   There is no undo. Only 'yes' will be accepted to confirm.
 
   Enter a value: 
+</pre>
 
-
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-090509.png "msahsan1@gmail.com") 
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-090631.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-090558.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-091619.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-090640.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-091701.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-091731.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-091722.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-091709.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-093645.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-093631.png "msahsan1@gmail.com")
