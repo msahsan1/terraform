@@ -344,7 +344,7 @@ aws_s3_bucket_versioning.versioning_example: Creation complete after 1s [id=my-s
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
-<b> S3 output </b>
+<h1> S3 output </h1>
 mahsan@vmmint:~/Project$ cat s3_bucket02.tf 
 provider "aws"  {
   region     = "us-east-2"
