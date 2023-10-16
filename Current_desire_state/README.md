@@ -1,3 +1,5 @@
+<pre>
+<h1> Current Desire State </h1>
 ahsan@vmmint:~/Project$ terraform plan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
@@ -288,4 +290,30 @@ aws_instance.web: Creation complete after 24s [id=i-073d39fd6da4d005b]
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 mahsan@vmmint:~/Project$ 
 
+</pre>
+
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-120759.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-120853.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-121416.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-121018.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-121502.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-121428.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-122138.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-121615.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-092755.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230920-122155.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114028.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-093033.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114323.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114313.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114303.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-115334.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114457.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114405.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-114347.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-120137.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-115356.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-120703.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-120143.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Current_desire_state/ksnip_20230920-120759.pngksnip_20230921-120927.png "msahsan1@gmail.com")
 
