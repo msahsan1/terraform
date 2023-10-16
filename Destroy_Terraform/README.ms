@@ -1,5 +1,6 @@
 <pre>
-<h1> Terraform Destroy </h1>
+
+ <h1>Terraform Destroy </h1>
 ahsan@vmmint:~/Project$ terraform destroy -target aws_instance.myec2
 aws_instance.myec2: Refreshing state... [id=i-034e0d06fd5d57559]
 
@@ -113,6 +114,7 @@ Do you really want to destroy all resources?
   There is no undo. Only 'yes' will be accepted to confirm.
 
   Enter a value: 
+
 </pre>
 
 ![Alt text](https://github.com/msahsan1/terraform/blob/main/Destroy_Terraform/ksnip_20230920-090509.png "msahsan1@gmail.com") 
