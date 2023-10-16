@@ -171,7 +171,75 @@ resource "aws_iam_user" "my_iam_users" {
 
 }
 
+
+mahsan@vmmint:~/NewGit/terraform/terraform_multipale_iam.tf$ terraform destroy
+aws_iam_user.my_iam_users[1]: Refreshing state... [id=my_iam_user_1]
+aws_iam_user.my_iam_users[0]: Refreshing state... [id=my_iam_user_0]
+aws_iam_user.my_iam_users[2]: Refreshing state... [id=my_iam_user_2]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_iam_user.my_iam_users[0] will be destroyed
+  - resource "aws_iam_user" "my_iam_users" {
+      - arn           = "arn:aws:iam::954854060441:user/my_iam_user_0" -> null
+      - force_destroy = false -> null
+      - id            = "my_iam_user_0" -> null
+      - name          = "my_iam_user_0" -> null
+      - path          = "/" -> null
+      - tags          = {} -> null
+      - tags_all      = {} -> null
+      - unique_id     = "AIDA54UN4WGMW6XFEDVK6" -> null
+    }
+
+  # aws_iam_user.my_iam_users[1] will be destroyed
+  - resource "aws_iam_user" "my_iam_users" {
+      - arn           = "arn:aws:iam::954854060441:user/my_iam_user_1" -> null
+      - force_destroy = false -> null
+      - id            = "my_iam_user_1" -> null
+      - name          = "my_iam_user_1" -> null
+      - path          = "/" -> null
+      - tags          = {} -> null
+      - tags_all      = {} -> null
+      - unique_id     = "AIDA54UN4WGM3LNV4WMQP" -> null
+    }
+
+  # aws_iam_user.my_iam_users[2] will be destroyed
+  - resource "aws_iam_user" "my_iam_users" {
+      - arn           = "arn:aws:iam::954854060441:user/my_iam_user_2" -> null
+      - force_destroy = false -> null
+      - id            = "my_iam_user_2" -> null
+      - name          = "my_iam_user_2" -> null
+      - path          = "/" -> null
+      - tags          = {} -> null
+      - tags_all      = {} -> null
+      - unique_id     = "AIDA54UN4WGMRW4YQKR3Y" -> null
+    }
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_iam_user.my_iam_users[1]: Destroying... [id=my_iam_user_1]
+aws_iam_user.my_iam_users[0]: Destroying... [id=my_iam_user_0]
+aws_iam_user.my_iam_users[2]: Destroying... [id=my_iam_user_2]
+aws_iam_user.my_iam_users[2]: Destruction complete after 1s
+aws_iam_user.my_iam_users[1]: Destruction complete after 1s
+aws_iam_user.my_iam_users[0]: Destruction complete after 1s
+
+Destroy complete! Resources: 3 destroyed.
+mahsan@vmmint:~/NewGit/terraform/terraform_multipale_iam.tf$ 
+
+
+
 <pre>
-![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_multipale_iam.tf/ksnip_20231016-160158.png "msahsan1@gmail.com")
+
 
 
