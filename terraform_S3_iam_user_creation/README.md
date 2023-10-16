@@ -324,6 +324,165 @@ my_s3_bucket_complete_details = {
 }
 mahsan@vmmint:~/Project$ 
 
+<h1> Destroy </h1>
+
+ahsan@vmmint:~/Project$ terraform destroy
+aws_iam_user.my_iam_user: Refreshing state... [id=my_iam_user_abc]
+aws_s3_bucket.my_s3_bucket_07: Refreshing state... [id=my-s3-bucket-07]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_iam_user.my_iam_user will be destroyed
+  - resource "aws_iam_user" "my_iam_user" {
+      - arn           = "arn:aws:iam::954854060441:user/my_iam_user_abc" -> null
+      - force_destroy = false -> null
+      - id            = "my_iam_user_abc" -> null
+      - name          = "my_iam_user_abc" -> null
+      - path          = "/" -> null
+      - tags          = {} -> null
+      - tags_all      = {} -> null
+      - unique_id     = "AIDA54UN4WGMWJE6PITCD" -> null
+    }
+
+  # aws_s3_bucket.my_s3_bucket_07 will be destroyed
+  - resource "aws_s3_bucket" "my_s3_bucket_07" {
+      - arn                         = "arn:aws:s3:::my-s3-bucket-07" -> null
+      - bucket                      = "my-s3-bucket-07" -> null
+      - bucket_domain_name          = "my-s3-bucket-07.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "my-s3-bucket-07.s3.us-east-2.amazonaws.com" -> null
+      - force_destroy               = false -> null
+      - hosted_zone_id              = "Z2O1EMRO9K5GLX" -> null
+      - id                          = "my-s3-bucket-07" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-2" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {} -> null
+
+      - grant {
+          - id          = "5d341e857a25bd7a6bce1f897ec7b9fd9e4ef478fe0a529a4db9dd49c281fe68" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm = "AES256" -> null
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = true -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+Changes to Outputs:
+  - my_iam_user_compleate_details = {
+      - arn                  = "arn:aws:iam::954854060441:user/my_iam_user_abc"
+      - force_destroy        = false
+      - id                   = "my_iam_user_abc"
+      - name                 = "my_iam_user_abc"
+      - path                 = "/"
+      - permissions_boundary = null
+      - tags                 = null
+      - tags_all             = {}
+      - unique_id            = "AIDA54UN4WGMWJE6PITCD"
+    } -> null
+  - my_s3_bucket_complete_details = {
+      - acceleration_status                  = ""
+      - acl                                  = null
+      - arn                                  = "arn:aws:s3:::my-s3-bucket-07"
+      - bucket                               = "my-s3-bucket-07"
+      - bucket_domain_name                   = "my-s3-bucket-07.s3.amazonaws.com"
+      - bucket_prefix                        = ""
+      - bucket_regional_domain_name          = "my-s3-bucket-07.s3.us-east-2.amazonaws.com"
+      - cors_rule                            = []
+      - force_destroy                        = false
+      - grant                                = [
+          - {
+              - id          = "5d341e857a25bd7a6bce1f897ec7b9fd9e4ef478fe0a529a4db9dd49c281fe68"
+              - permissions = [
+                  - "FULL_CONTROL",
+                ]
+              - type        = "CanonicalUser"
+              - uri         = ""
+            },
+        ]
+      - hosted_zone_id                       = "Z2O1EMRO9K5GLX"
+      - id                                   = "my-s3-bucket-07"
+      - lifecycle_rule                       = []
+      - logging                              = []
+      - object_lock_configuration            = []
+      - object_lock_enabled                  = false
+      - policy                               = ""
+      - region                               = "us-east-2"
+      - replication_configuration            = []
+      - request_payer                        = "BucketOwner"
+      - server_side_encryption_configuration = [
+          - {
+              - rule = [
+                  - {
+                      - apply_server_side_encryption_by_default = [
+                          - {
+                              - kms_master_key_id = ""
+                              - sse_algorithm     = "AES256"
+                            },
+                        ]
+                      - bucket_key_enabled                      = false
+                    },
+                ]
+            },
+        ]
+      - tags                                 = null
+      - tags_all                             = {}
+      - timeouts                             = null
+      - versioning                           = [
+          - {
+              - enabled    = true
+              - mfa_delete = false
+            },
+        ]
+      - website                              = []
+      - website_domain                       = null
+      - website_endpoint                     = null
+    } -> null
+╷
+│ Warning: Argument is deprecated
+│ 
+│   with aws_s3_bucket.my_s3_bucket_07,
+│   on terraform_iam_s3_bucket02.tf line 7, in resource "aws_s3_bucket" "my_s3_bucket_07":
+│    7: resource "aws_s3_bucket" "my_s3_bucket_07" {
+│ 
+│ Use the aws_s3_bucket_versioning resource instead
+╵
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_iam_user.my_iam_user: Destroying... [id=my_iam_user_abc]
+aws_s3_bucket.my_s3_bucket_07: Destroying... [id=my-s3-bucket-07]
+aws_iam_user.my_iam_user: Destruction complete after 1s
+aws_s3_bucket.my_s3_bucket_07: Destruction complete after 1s
+
+Destroy complete! Resources: 2 destroyed.
+mahsan@vmmint:~/Project$ 
+
 
 
 </pre>
