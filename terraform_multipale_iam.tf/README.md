@@ -172,3 +172,6 @@ resource "aws_iam_user" "my_iam_users" {
 }
 
 <pre>
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_multipale_iam.tf/ksnip_20231016-160158.png "msahsan1@gmail.com")
+
+
