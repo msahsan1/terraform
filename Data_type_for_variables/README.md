@@ -194,3 +194,13 @@ mahsan@vmmint:~/Project$
 
 </pre>
 
+
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230924-102345.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230924-102239.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230923-125528.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230924-102731.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230924-102543.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230924-102359.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/Data_type_for_variables/ksnip_20230925-105018.png "msahsan1@gmail.com")
+
+
