@@ -328,4 +328,5 @@ mahsan@vmmint:~/Project$
 
 </pre>
 
-
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_S3_iam_user_creation/ksnip_20231016-114349.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_S3_iam_user_creation/ksnip_20231016-114423.png "msahsan1@gmail.com")
