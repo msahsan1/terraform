@@ -344,6 +344,185 @@ aws_s3_bucket_versioning.versioning_example: Creation complete after 1s [id=my-s
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
+<b> S3 output </b>
+mahsan@vmmint:~/Project$ cat s3_bucket02.tf 
+provider "aws"  {
+  region     = "us-east-2"
+}
+
+resource "aws_s3_bucket" "my_s3_bucket_07" {
+    bucket = "my-s3-bucket-07"
+    versioning {
+        enabled = true
+   }
+}
+
+> aws_s3_bucket.my_s3_bucket_07
+{
+  "acceleration_status" = ""
+  "acl" = tostring(null)
+  "arn" = "arn:aws:s3:::my-s3-bucket-07"
+  "bucket" = "my-s3-bucket-07"
+  "bucket_domain_name" = "my-s3-bucket-07.s3.amazonaws.com"
+  "bucket_prefix" = ""
+  "bucket_regional_domain_name" = "my-s3-bucket-07.s3.us-east-2.amazonaws.com"
+  "cors_rule" = tolist([])
+  "force_destroy" = false
+  "grant" = toset([
+    {
+      "id" = "5d341e857a25bd7a6bce1f897ec7b9fd9e4ef478fe0a529a4db9dd49c281fe68"
+      "permissions" = toset([
+        "FULL_CONTROL",
+      ])
+      "type" = "CanonicalUser"
+      "uri" = ""
+    },
+  ])
+  "hosted_zone_id" = "Z2O1EMRO9K5GLX"
+  "id" = "my-s3-bucket-07"
+  "lifecycle_rule" = tolist([])
+  "logging" = tolist([])
+  "object_lock_configuration" = tolist([])
+  "object_lock_enabled" = false
+  "policy" = ""
+  "region" = "us-east-2"
+  "replication_configuration" = tolist([])
+  "request_payer" = "BucketOwner"
+  "server_side_encryption_configuration" = tolist([
+    {
+      "rule" = tolist([
+        {
+          "apply_server_side_encryption_by_default" = tolist([
+            {
+              "kms_master_key_id" = ""
+              "sse_algorithm" = "AES256"
+            },
+          ])
+          "bucket_key_enabled" = false
+        },
+      ])
+    },
+  ])
+  "tags" = tomap(null) /* of string */
+  "tags_all" = tomap({})
+  "timeouts" = null /* object */
+  "versioning" = tolist([
+    {
+      "enabled" = true
+      "mfa_delete" = false
+    },
+  ])
+  "website" = tolist([])
+  "website_domain" = tostring(null)
+  "website_endpoint" = tostring(null)
+}
+>  
+
+ahsan@vmmint:~/Project$ cat s3_bucket02.tf 
+provider "aws"  {
+  region     = "us-east-2"
+}
+
+
+
+resource "aws_s3_bucket" "my_s3_bucket_07" {
+    bucket = "my-s3-bucket-07"
+    versioning {
+        enabled = true
+   }
+}
+
+output "my_s3_bucket_complete" {
+   value = aws_s3_bucket.my_s3_bucket_07
+
+}
+
+mahsan@vmmint:~/Project$ terraform apply -refresh=false
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+╷
+│ Warning: Argument is deprecated
+│ 
+│   with aws_s3_bucket.my_s3_bucket_07,
+│   on s3_bucket02.tf line 7, in resource "aws_s3_bucket" "my_s3_bucket_07":
+│    7: resource "aws_s3_bucket" "my_s3_bucket_07" {
+│ 
+│ Use the aws_s3_bucket_versioning resource instead
+│ 
+│ (and one more similar warning elsewhere)
+╵
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+my_s3_bucket_complete = {
+  "acceleration_status" = ""
+  "acl" = tostring(null)
+  "arn" = "arn:aws:s3:::my-s3-bucket-07"
+  "bucket" = "my-s3-bucket-07"
+  "bucket_domain_name" = "my-s3-bucket-07.s3.amazonaws.com"
+  "bucket_prefix" = ""
+  "bucket_regional_domain_name" = "my-s3-bucket-07.s3.us-east-2.amazonaws.com"
+  "cors_rule" = tolist([])
+  "force_destroy" = false
+  "grant" = toset([
+    {
+      "id" = "5d341e857a25bd7a6bce1f897ec7b9fd9e4ef478fe0a529a4db9dd49c281fe68"
+      "permissions" = toset([
+        "FULL_CONTROL",
+      ])
+      "type" = "CanonicalUser"
+      "uri" = ""
+    },
+  ])
+  "hosted_zone_id" = "Z2O1EMRO9K5GLX"
+  "id" = "my-s3-bucket-07"
+  "lifecycle_rule" = tolist([])
+  "logging" = tolist([])
+  "object_lock_configuration" = tolist([])
+  "object_lock_enabled" = false
+  "policy" = ""
+  "region" = "us-east-2"
+  "replication_configuration" = tolist([])
+  "request_payer" = "BucketOwner"
+  "server_side_encryption_configuration" = tolist([
+    {
+      "rule" = tolist([
+        {
+          "apply_server_side_encryption_by_default" = tolist([
+            {
+              "kms_master_key_id" = ""
+              "sse_algorithm" = "AES256"
+            },
+          ])
+          "bucket_key_enabled" = false
+        },
+      ])
+    },
+  ])
+  "tags" = tomap(null) /* of string */
+  "tags_all" = tomap({})
+  "timeouts" = null /* object */
+  "versioning" = tolist([
+    {
+      "enabled" = true
+      "mfa_delete" = false
+    },
+  ])
+  "website" = tolist([])
+  "website_domain" = tostring(null)
+  "website_endpoint" = tostring(null)
+}
+mahsan@vmmint:~/Project$ 
+
+
+
+
+
+
 
 </pre>
 ![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_s3_bucket/ksnip_20231015-103120.png "msahsan1@gmail.com")
