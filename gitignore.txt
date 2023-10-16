@@ -1,4 +1,5 @@
 <pre>
+
 <h1> Git Ignore skip files and directories in the files specefied </h1>
 
 
@@ -6,8 +7,6 @@ mahsan@vmmint:~/NewGit/terraform$ cat .gitignore
 *.tfstate
 *.tfstate.backup
 .terraform
-
-
 
 mahsan@vmmint:~/NewGit/terraform$ git add .
 mahsan@vmmint:~/NewGit/terraform$ git commit -m "test"
