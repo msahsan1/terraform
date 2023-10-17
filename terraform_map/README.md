@@ -171,3 +171,9 @@ Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 mahsan@vmmint:~/NewGit/terraform/terraform-map.tf$ 
 
 </pre>
+
+
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_map/ksnip_20231017-121643.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_map/ksnip_20231017-121659.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_map/ksnip_20231017-121720.png "msahsan1@gmail.com")
+
