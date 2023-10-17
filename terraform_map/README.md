@@ -1,3 +1,6 @@
+<pre>
+<h2> Terraform Map </h2>
+
 ahsan@vmmint:~/NewGit/terraform/terraform-map.tf$ cat main.tf 
 provider "aws"  {
   region     = "us-east-2"
@@ -167,4 +170,4 @@ aws_iam_user.my_iam_users["shahid"]: Creation complete after 1s [id=shahid]
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 mahsan@vmmint:~/NewGit/terraform/terraform-map.tf$ 
 
-
+</pre>
