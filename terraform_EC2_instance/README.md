@@ -373,7 +373,7 @@ aws_security_group.http_server_sg: Creation complete after 4s [id=sg-0c8ba7b263a
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
-Outputs:
+<h2> Outputs: </h2>
 
 aws_security_group_http_server_details = {
   "arn" = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-0c8ba7b263a0505e1"
@@ -438,3 +438,8 @@ aws_security_group_http_server_details = {
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ 
 
 </pre>
+
+
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_EC2_instance/ksnip_20231018-091224.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_EC2_instance/ksnip_20231018-091248.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_EC2_instance/ksnip_20231018-091257.png "msahsan1@gmail.com")
