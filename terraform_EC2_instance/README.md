@@ -1,50 +1,5 @@
-<pre>
- <h2> Terraform  Security group and VPC Creation </h2>
-mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ cat main.tf 
-provider "aws" {
-  region = "us-east-2"
-}
-
-resource "aws_default_vpc" "default" {
-
-}
-
-resource "aws_security_group" "http_server_sg" {
-  name   = "http_server_sg"
-  vpc_id = "vpc-0c867cff15e80e304"
-  ##  vpc_id = aws_default_vpc.default.id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    name = "http_server_sg"
-  }
-}
-mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ cat output.tf 
-
-output "aws_security_group_http_server_details" {
-  value = aws_security_group.http_server_sg
-
-}
+ <pre>
+<h2> TerraForm Provision HTTP server </h2>
 
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ terraform plan
 
@@ -74,6 +29,52 @@ Terraform will perform the following actions:
       + main_route_table_id                  = (known after apply)
       + owner_id                             = (known after apply)
       + tags_all                             = (known after apply)
+    }
+
+  # aws_instance.http_servers will be created
+  + resource "aws_instance" "http_servers" {
+      + ami                                  = "ami-01103fb68b3569475"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "terraform-key"
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = "subnet-0d807dc28683ac161"
+      + tags_all                             = (known after apply)
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
     }
 
   # aws_security_group.http_server_sg will be created
@@ -137,7 +138,7 @@ Terraform will perform the following actions:
       + vpc_id                 = "vpc-0c867cff15e80e304"
     }
 
-Plan: 2 to add, 0 to change, 0 to destroy.
+Plan: 3 to add, 0 to change, 0 to destroy.
 
 Changes to Outputs:
   + aws_security_group_http_server_details = {
@@ -201,10 +202,9 @@ Changes to Outputs:
       + vpc_id                 = "vpc-0c867cff15e80e304"
     }
 
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply"
-now.
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ terraform apply
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -233,6 +233,52 @@ Terraform will perform the following actions:
       + main_route_table_id                  = (known after apply)
       + owner_id                             = (known after apply)
       + tags_all                             = (known after apply)
+    }
+
+  # aws_instance.http_servers will be created
+  + resource "aws_instance" "http_servers" {
+      + ami                                  = "ami-01103fb68b3569475"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = (known after apply)
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_stop                     = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t2.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = "terraform-key"
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + placement_partition_number           = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + spot_instance_request_id             = (known after apply)
+      + subnet_id                            = "subnet-0d807dc28683ac161"
+      + tags_all                             = (known after apply)
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + user_data_replace_on_change          = false
+      + vpc_security_group_ids               = (known after apply)
     }
 
   # aws_security_group.http_server_sg will be created
@@ -296,7 +342,7 @@ Terraform will perform the following actions:
       + vpc_id                 = "vpc-0c867cff15e80e304"
     }
 
-Plan: 2 to add, 0 to change, 0 to destroy.
+Plan: 3 to add, 0 to change, 0 to destroy.
 
 Changes to Outputs:
   + aws_security_group_http_server_details = {
@@ -368,265 +414,231 @@ Do you want to perform these actions?
 
 aws_default_vpc.default: Creating...
 aws_security_group.http_server_sg: Creating...
-aws_default_vpc.default: Creation complete after 3s [id=vpc-0c867cff15e80e304]
-aws_security_group.http_server_sg: Creation complete after 4s [id=sg-0c8ba7b263a0505e1]
-
-Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
-
-<h2> Outputs: </h2>
-
-aws_security_group_http_server_details = {
-  "arn" = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-0c8ba7b263a0505e1"
-  "description" = "Managed by Terraform"
-  "egress" = toset([
-    {
-      "cidr_blocks" = tolist([
-        "0.0.0.0/0",
-      ])
-      "description" = ""
-      "from_port" = 0
-      "ipv6_cidr_blocks" = tolist([])
-      "prefix_list_ids" = tolist([])
-      "protocol" = "-1"
-      "security_groups" = toset([])
-      "self" = false
-      "to_port" = 0
-    },
-  ])
-  "id" = "sg-0c8ba7b263a0505e1"
-  "ingress" = toset([
-    {
-      "cidr_blocks" = tolist([
-        "0.0.0.0/0",
-      ])
-      "description" = ""
-      "from_port" = 22
-      "ipv6_cidr_blocks" = tolist([])
-      "prefix_list_ids" = tolist([])
-      "protocol" = "tcp"
-      "security_groups" = toset([])
-      "self" = false
-      "to_port" = 22
-    },
-    {
-      "cidr_blocks" = tolist([
-        "0.0.0.0/0",
-      ])
-      "description" = ""
-      "from_port" = 80
-      "ipv6_cidr_blocks" = tolist([])
-      "prefix_list_ids" = tolist([])
-      "protocol" = "tcp"
-      "security_groups" = toset([])
-      "self" = false
-      "to_port" = 80
-    },
-  ])
-  "name" = "http_server_sg"
-  "name_prefix" = ""
-  "owner_id" = "954854060441"
-  "revoke_rules_on_delete" = false
-  "tags" = tomap({
-    "name" = "http_server_sg"
-  })
-  "tags_all" = tomap({
-    "name" = "http_server_sg"
-  })
-  "timeouts" = null /* object */
-  "vpc_id" = "vpc-0c867cff15e80e304"
-}
-mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ 
-
-<h1> *********** </h1>
-<h2> Create EC2 instance </h2>
-
-hsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ cat main.tf 
-provider "aws" {
-  region = "us-east-2"
-}
-
-resource "aws_default_vpc" "default" {
-
-}
-
-resource "aws_security_group" "http_server_sg" {
-  name   = "http_server_sg"
-  vpc_id = "vpc-0c867cff15e80e304"
-  ##  vpc_id = aws_default_vpc.default.id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    name = "http_server_sg"
-  }
-
-}
-
-resource "aws_instance" "http_servers" {
-  ami                   = "ami-01103fb68b3569475"
-  key_name               = "default-key"
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.http_server_sg.id]
-  subnet_id = "subnet-0d807dc28683ac161"
-
-}
-
-mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ terraform plan
-aws_default_vpc.default: Refreshing state... [id=vpc-0c867cff15e80e304]
-aws_security_group.http_server_sg: Refreshing state... [id=sg-0c8ba7b263a0505e1]
-
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  # aws_instance.http_servers will be created
-  + resource "aws_instance" "http_servers" {
-      + ami                                  = "ami-01103fb68b3569475"
-      + arn                                  = (known after apply)
-      + associate_public_ip_address          = (known after apply)
-      + availability_zone                    = (known after apply)
-      + cpu_core_count                       = (known after apply)
-      + cpu_threads_per_core                 = (known after apply)
-      + disable_api_stop                     = (known after apply)
-      + disable_api_termination              = (known after apply)
-      + ebs_optimized                        = (known after apply)
-      + get_password_data                    = false
-      + host_id                              = (known after apply)
-      + host_resource_group_arn              = (known after apply)
-      + iam_instance_profile                 = (known after apply)
-      + id                                   = (known after apply)
-      + instance_initiated_shutdown_behavior = (known after apply)
-      + instance_lifecycle                   = (known after apply)
-      + instance_state                       = (known after apply)
-      + instance_type                        = "t2.micro"
-      + ipv6_address_count                   = (known after apply)
-      + ipv6_addresses                       = (known after apply)
-      + key_name                             = "default-key"
-      + monitoring                           = (known after apply)
-      + outpost_arn                          = (known after apply)
-      + password_data                        = (known after apply)
-      + placement_group                      = (known after apply)
-      + placement_partition_number           = (known after apply)
-      + primary_network_interface_id         = (known after apply)
-      + private_dns                          = (known after apply)
-      + private_ip                           = (known after apply)
-      + public_dns                           = (known after apply)
-      + public_ip                            = (known after apply)
-      + secondary_private_ips                = (known after apply)
-      + security_groups                      = (known after apply)
-      + source_dest_check                    = true
-      + spot_instance_request_id             = (known after apply)
-      + subnet_id                            = "subnet-0d807dc28683ac161"
-      + tags_all                             = (known after apply)
-      + tenancy                              = (known after apply)
-      + user_data                            = (known after apply)
-      + user_data_base64                     = (known after apply)
-      + user_data_replace_on_change          = false
-      + vpc_security_group_ids               = [
-          + "sg-0c8ba7b263a0505e1",
-        ]
-    }
-
-Plan: 1 to add, 0 to change, 0 to destroy.
-
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply"
-now.
-mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ terraform apply -refresh=false
-
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  # aws_instance.http_servers will be created
-  + resource "aws_instance" "http_servers" {
-      + ami                                  = "ami-01103fb68b3569475"
-      + arn                                  = (known after apply)
-      + associate_public_ip_address          = (known after apply)
-      + availability_zone                    = (known after apply)
-      + cpu_core_count                       = (known after apply)
-      + cpu_threads_per_core                 = (known after apply)
-      + disable_api_stop                     = (known after apply)
-      + disable_api_termination              = (known after apply)
-      + ebs_optimized                        = (known after apply)
-      + get_password_data                    = false
-      + host_id                              = (known after apply)
-      + host_resource_group_arn              = (known after apply)
-      + iam_instance_profile                 = (known after apply)
-      + id                                   = (known after apply)
-      + instance_initiated_shutdown_behavior = (known after apply)
-      + instance_lifecycle                   = (known after apply)
-      + instance_state                       = (known after apply)
-      + instance_type                        = "t2.micro"
-      + ipv6_address_count                   = (known after apply)
-      + ipv6_addresses                       = (known after apply)
-      + key_name                             = "default-key"
-      + monitoring                           = (known after apply)
-      + outpost_arn                          = (known after apply)
-      + password_data                        = (known after apply)
-      + placement_group                      = (known after apply)
-      + placement_partition_number           = (known after apply)
-      + primary_network_interface_id         = (known after apply)
-      + private_dns                          = (known after apply)
-      + private_ip                           = (known after apply)
-      + public_dns                           = (known after apply)
-      + public_ip                            = (known after apply)
-      + secondary_private_ips                = (known after apply)
-      + security_groups                      = (known after apply)
-      + source_dest_check                    = true
-      + spot_instance_request_id             = (known after apply)
-      + subnet_id                            = "subnet-0d807dc28683ac161"
-      + tags_all                             = (known after apply)
-      + tenancy                              = (known after apply)
-      + user_data                            = (known after apply)
-      + user_data_base64                     = (known after apply)
-      + user_data_replace_on_change          = false
-      + vpc_security_group_ids               = [
-          + "sg-0c8ba7b263a0505e1",
-        ]
-    }
-
-Plan: 1 to add, 0 to change, 0 to destroy.
-
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes
-
+aws_default_vpc.default: Creation complete after 2s [id=vpc-0c867cff15e80e304]
+aws_security_group.http_server_sg: Creation complete after 3s [id=sg-07865e69310aed24e]
 aws_instance.http_servers: Creating...
 aws_instance.http_servers: Still creating... [10s elapsed]
 aws_instance.http_servers: Still creating... [20s elapsed]
-aws_instance.http_servers: Creation complete after 23s [id=i-07144718fa3548d2c]
+aws_instance.http_servers: Provisioning with 'remote-exec'...
+aws_instance.http_servers (remote-exec): Connecting to remote host via SSH...
+aws_instance.http_servers (remote-exec):   Host: 18.220.14.113
+aws_instance.http_servers (remote-exec):   User: ec2-user
+aws_instance.http_servers (remote-exec):   Password: false
+aws_instance.http_servers (remote-exec):   Private key: true
+aws_instance.http_servers (remote-exec):   Certificate: false
+aws_instance.http_servers (remote-exec):   SSH Agent: true
+aws_instance.http_servers (remote-exec):   Checking Host Key: false
+aws_instance.http_servers (remote-exec):   Target Platform: unix
+aws_instance.http_servers: Still creating... [30s elapsed]
+aws_instance.http_servers (remote-exec): Connecting to remote host via SSH...
+aws_instance.http_servers (remote-exec):   Host: 18.220.14.113
+aws_instance.http_servers (remote-exec):   User: ec2-user
+aws_instance.http_servers (remote-exec):   Password: false
+aws_instance.http_servers (remote-exec):   Private key: true
+aws_instance.http_servers (remote-exec):   Certificate: false
+aws_instance.http_servers (remote-exec):   SSH Agent: true
+aws_instance.http_servers (remote-exec):   Checking Host Key: false
+aws_instance.http_servers (remote-exec):   Target Platform: unix
+aws_instance.http_servers (remote-exec): Connected!
+aws_instance.http_servers (remote-exec): Amazon  ---  B/s |   0  B     --:-- ETA
+aws_instance.http_servers (remote-exec): Amazon  ---  B/s |   0  B     --:-- ETA
+aws_instance.http_servers (remote-exec): Amazon   23 MB/s |  18 MB     00:00
+aws_instance.http_servers: Still creating... [40s elapsed]
+aws_instance.http_servers (remote-exec): Amazon  ---  B/s |   0  B     --:-- ETA
+aws_instance.http_servers (remote-exec): Amazon  ---  B/s |   0  B     --:-- ETA
+aws_instance.http_servers (remote-exec): Amazon  517 kB/s | 160 kB     00:00
+aws_instance.http_servers (remote-exec): Last metadata expiration check: 0:00:01 ago on Fri Oct 20 15:16:17 2023.
+aws_instance.http_servers (remote-exec): Dependencies resolved.
+aws_instance.http_servers (remote-exec): ========================================
+aws_instance.http_servers (remote-exec):  Package     Arch   Version
+aws_instance.http_servers (remote-exec):                       Repository   Size
+aws_instance.http_servers (remote-exec): ========================================
+aws_instance.http_servers (remote-exec): Installing:
+aws_instance.http_servers (remote-exec):  httpd       x86_64 2.4.56-1.amzn2023
+aws_instance.http_servers (remote-exec):                       amazonlinux  48 k
+aws_instance.http_servers (remote-exec): Installing dependencies:
+aws_instance.http_servers (remote-exec):  apr         x86_64 1.7.2-2.amzn2023.0.2
+aws_instance.http_servers (remote-exec):                       amazonlinux 129 k
+aws_instance.http_servers (remote-exec):  apr-util    x86_64 1.6.3-1.amzn2023.0.1
+aws_instance.http_servers (remote-exec):                       amazonlinux  98 k
+aws_instance.http_servers (remote-exec):  generic-logos-httpd
+aws_instance.http_servers (remote-exec):              noarch 18.0.0-12.amzn2023.0.3
+aws_instance.http_servers (remote-exec):                       amazonlinux  19 k
+aws_instance.http_servers (remote-exec):  httpd-core  x86_64 2.4.56-1.amzn2023
+aws_instance.http_servers (remote-exec):                       amazonlinux 1.4 M
+aws_instance.http_servers (remote-exec):  httpd-filesystem
+aws_instance.http_servers (remote-exec):              noarch 2.4.56-1.amzn2023
+aws_instance.http_servers (remote-exec):                       amazonlinux  15 k
+aws_instance.http_servers (remote-exec):  httpd-tools x86_64 2.4.56-1.amzn2023
+aws_instance.http_servers (remote-exec):                       amazonlinux  82 k
+aws_instance.http_servers (remote-exec):  libbrotli   x86_64 1.0.9-4.amzn2023.0.2
+aws_instance.http_servers (remote-exec):                       amazonlinux 315 k
+aws_instance.http_servers (remote-exec):  mailcap     noarch 2.1.49-3.amzn2023.0.3
+aws_instance.http_servers (remote-exec):                       amazonlinux  33 k
+aws_instance.http_servers (remote-exec): Installing weak dependencies:
+aws_instance.http_servers (remote-exec):  apr-util-openssl
+aws_instance.http_servers (remote-exec):              x86_64 1.6.3-1.amzn2023.0.1
+aws_instance.http_servers (remote-exec):                       amazonlinux  17 k
+aws_instance.http_servers (remote-exec):  mod_http2   x86_64 2.0.11-2.amzn2023
+aws_instance.http_servers (remote-exec):                       amazonlinux 150 k
+aws_instance.http_servers (remote-exec):  mod_lua     x86_64 2.4.56-1.amzn2023
+aws_instance.http_servers (remote-exec):                       amazonlinux  62 k
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+aws_instance.http_servers (remote-exec): Transaction Summary
+aws_instance.http_servers (remote-exec): ========================================
+aws_instance.http_servers (remote-exec): Install  12 Packages
+
+aws_instance.http_servers (remote-exec): Total download size: 2.3 M
+aws_instance.http_servers (remote-exec): Installed size: 6.9 M
+aws_instance.http_servers (remote-exec): Downloading Packages:
+aws_instance.http_servers (remote-exec): Amazon  ---  B/s |   0  B     --:-- ETA
+aws_instance.http_servers (remote-exec): (1/12): ---  B/s |   0  B     --:-- ETA
+aws_instance.http_servers (remote-exec): (1/12): 156 kB/s |  17 kB     00:00
+aws_instance.http_servers (remote-exec): (2-3/12 155 kB/s |  17 kB     00:15 ETA
+aws_instance.http_servers (remote-exec): (2/12): 854 kB/s |  98 kB     00:00
+aws_instance.http_servers (remote-exec): (3-4/12 185 kB/s | 165 kB     00:11 ETA
+aws_instance.http_servers (remote-exec): (3/12): 2.4 MB/s | 315 kB     00:00
+aws_instance.http_servers (remote-exec): (4-5/12 237 kB/s | 429 kB     00:08 ETA
+aws_instance.http_servers (remote-exec): (4/12): 4.3 MB/s |  82 kB     00:00
+aws_instance.http_servers (remote-exec): (5-6/12 270 kB/s | 595 kB     00:06 ETA
+aws_instance.http_servers (remote-exec): (5/12): 5.0 MB/s | 150 kB     00:00
+aws_instance.http_servers (remote-exec): (6-7/12 283 kB/s | 662 kB     00:06 ETA
+aws_instance.http_servers (remote-exec): (6/12): 5.7 MB/s | 129 kB     00:00
+aws_instance.http_servers (remote-exec): (7-8/12 408 kB/s | 1.3 MB     00:02 ETA
+aws_instance.http_servers (remote-exec): (7/12): 2.3 MB/s |  62 kB     00:00
+aws_instance.http_servers (remote-exec): (8-9/12 429 kB/s | 1.4 MB     00:02 ETA
+aws_instance.http_servers (remote-exec): (8/12): 3.3 MB/s |  48 kB     00:00
+aws_instance.http_servers (remote-exec): (9-10/1 503 kB/s | 1.7 MB     00:01 ETA
+aws_instance.http_servers (remote-exec): (9/12):  22 MB/s | 1.4 MB     00:00
+aws_instance.http_servers (remote-exec): (10-11/ 605 kB/s | 2.2 MB     00:00 ETA
+aws_instance.http_servers (remote-exec): (10/12) 1.1 MB/s |  33 kB     00:00
+aws_instance.http_servers (remote-exec): (11-12/ 615 kB/s | 2.3 MB     00:00 ETA
+aws_instance.http_servers (remote-exec): (11/12) 695 kB/s |  19 kB     00:00
+aws_instance.http_servers (remote-exec): (12/12) 615 kB/s | 2.3 MB     00:00 ETA
+aws_instance.http_servers (remote-exec): (12/12) 850 kB/s |  15 kB     00:00
+aws_instance.http_servers (remote-exec): ----------------------------------------
+aws_instance.http_servers (remote-exec): Total   7.5 MB/s | 2.3 MB     00:00
+aws_instance.http_servers (remote-exec): Running transaction check
+aws_instance.http_servers (remote-exec): Transaction check succeeded.
+aws_instance.http_servers (remote-exec): Running transaction test
+aws_instance.http_servers (remote-exec): Transaction test succeeded.
+aws_instance.http_servers (remote-exec): Running transaction
+aws_instance.http_servers (remote-exec):   Preparing        :  [           ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [=          ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [==         ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [===        ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [====       ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [=====      ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [======     ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [=======    ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [========   ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [=========  ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :  [========== ] 1/1
+aws_instance.http_servers (remote-exec):   Preparing        :                1/1
+aws_instance.http_servers (remote-exec):   Installing       : apr-   1/12
+aws_instance.http_servers (remote-exec):   Installing       : apr-1.7.2-    1/12
+aws_instance.http_servers (remote-exec):   Installing       : apr-   2/12
+aws_instance.http_servers (remote-exec):   Installing       : apr-util-o    2/12
+aws_instance.http_servers (remote-exec):   Installing       : apr-   3/12
+aws_instance.http_servers (remote-exec):   Installing       : apr-util-1    3/12
+aws_instance.http_servers (remote-exec):   Installing       : mail   4/12
+aws_instance.http_servers (remote-exec):   Installing       : mailcap-2.    4/12
+aws_instance.http_servers (remote-exec):   Installing       : http   5/12
+aws_instance.http_servers (remote-exec):   Installing       : httpd-tool    5/12
+aws_instance.http_servers (remote-exec):   Running scriptlet: httpd-file    6/12
+aws_instance.http_servers (remote-exec):   Installing       : http   6/12
+aws_instance.http_servers (remote-exec):   Installing       : httpd-file    6/12
+aws_instance.http_servers (remote-exec):   Installing       : http   7/12
+aws_instance.http_servers (remote-exec):   Installing       : httpd-core    7/12
+aws_instance.http_servers (remote-exec):   Installing       : mod_   8/12
+aws_instance.http_servers (remote-exec):   Installing       : mod_http2-    8/12
+aws_instance.http_servers (remote-exec):   Installing       : mod_   9/12
+aws_instance.http_servers (remote-exec):   Installing       : mod_lua-2.    9/12
+aws_instance.http_servers (remote-exec):   Installing       : gene  10/12
+aws_instance.http_servers (remote-exec):   Installing       : generic-lo   10/12
+aws_instance.http_servers (remote-exec):   Installing       : libb  11/12
+aws_instance.http_servers (remote-exec):   Installing       : libbrotli-   11/12
+aws_instance.http_servers (remote-exec):   Installing       : http  12/12
+aws_instance.http_servers (remote-exec):   Installing       : httpd-2.4.   12/12
+aws_instance.http_servers (remote-exec):   Running scriptlet: httpd-2.4.   12/12
+aws_instance.http_servers: Still creating... [50s elapsed]
+aws_instance.http_servers (remote-exec):   Verifying        : apr-util-1    1/12
+aws_instance.http_servers (remote-exec):   Verifying        : libbrotli-    2/12
+aws_instance.http_servers (remote-exec):   Verifying        : apr-util-o    3/12
+aws_instance.http_servers (remote-exec):   Verifying        : mod_http2-    4/12
+aws_instance.http_servers (remote-exec):   Verifying        : httpd-tool    5/12
+aws_instance.http_servers (remote-exec):   Verifying        : httpd-core    6/12
+aws_instance.http_servers (remote-exec):   Verifying        : apr-1.7.2-    7/12
+aws_instance.http_servers (remote-exec):   Verifying        : mod_lua-2.    8/12
+aws_instance.http_servers (remote-exec):   Verifying        : httpd-2.4.    9/12
+aws_instance.http_servers (remote-exec):   Verifying        : mailcap-2.   10/12
+aws_instance.http_servers (remote-exec):   Verifying        : generic-lo   11/12
+aws_instance.http_servers (remote-exec):   Verifying        : httpd-file   12/12
+aws_instance.http_servers (remote-exec): ========================================
+aws_instance.http_servers (remote-exec): WARNING:
+aws_instance.http_servers (remote-exec):   A newer release of "Amazon Linux" is available.
+
+aws_instance.http_servers (remote-exec):   Available Versions:
+
+aws_instance.http_servers (remote-exec):   Version 2023.2.20230920:
+aws_instance.http_servers (remote-exec):     Run the following command to upgrade to 2023.2.20230920:
+
+aws_instance.http_servers (remote-exec):       dnf upgrade --releasever=2023.2.20230920
+
+aws_instance.http_servers (remote-exec):     Release notes:
+aws_instance.http_servers (remote-exec):      https://docs.aws.amazon.com/linux/al2023/release-notes/relnotes-2023.2.20230920.html
+
+aws_instance.http_servers (remote-exec):   Version 2023.2.20231002:
+aws_instance.http_servers (remote-exec):     Run the following command to upgrade to 2023.2.20231002:
+
+aws_instance.http_servers (remote-exec):       dnf upgrade --releasever=2023.2.20231002
+
+aws_instance.http_servers (remote-exec):     Release notes:
+aws_instance.http_servers (remote-exec):      https://docs.aws.amazon.com/linux/al2023/release-notes/relnotes-2023.2.20231002.html
+
+aws_instance.http_servers (remote-exec):   Version 2023.2.20231011:
+aws_instance.http_servers (remote-exec):     Run the following command to upgrade to 2023.2.20231011:
+
+aws_instance.http_servers (remote-exec):       dnf upgrade --releasever=2023.2.20231011
+
+aws_instance.http_servers (remote-exec):     Release notes:
+aws_instance.http_servers (remote-exec):      https://docs.aws.amazon.com/linux/al2023/release-notes/relnotes-2023.2.20231011.html
+
+aws_instance.http_servers (remote-exec):   Version 2023.2.20231016:
+aws_instance.http_servers (remote-exec):     Run the following command to upgrade to 2023.2.20231016:
+
+aws_instance.http_servers (remote-exec):       dnf upgrade --releasever=2023.2.20231016
+
+aws_instance.http_servers (remote-exec):     Release notes:
+aws_instance.http_servers (remote-exec):      https://docs.aws.amazon.com/linux/al2023/release-notes/relnotes-2023.2.20231016.html
+
+aws_instance.http_servers (remote-exec): ========================================
+
+aws_instance.http_servers (remote-exec): Installed:
+aws_instance.http_servers (remote-exec):   apr-1.7.2-2.amzn2023.0.2.x86_64
+aws_instance.http_servers (remote-exec):   apr-util-1.6.3-1.amzn2023.0.1.x86_64
+aws_instance.http_servers (remote-exec):   apr-util-openssl-1.6.3-1.amzn2023.0.1.x86_64
+aws_instance.http_servers (remote-exec):   generic-logos-httpd-18.0.0-12.amzn2023.0.3.noarch
+aws_instance.http_servers (remote-exec):   httpd-2.4.56-1.amzn2023.x86_64
+aws_instance.http_servers (remote-exec):   httpd-core-2.4.56-1.amzn2023.x86_64
+aws_instance.http_servers (remote-exec):   httpd-filesystem-2.4.56-1.amzn2023.noarch
+aws_instance.http_servers (remote-exec):   httpd-tools-2.4.56-1.amzn2023.x86_64
+aws_instance.http_servers (remote-exec):   libbrotli-1.0.9-4.amzn2023.0.2.x86_64
+aws_instance.http_servers (remote-exec):   mailcap-2.1.49-3.amzn2023.0.3.noarch
+aws_instance.http_servers (remote-exec):   mod_http2-2.0.11-2.amzn2023.x86_64
+aws_instance.http_servers (remote-exec):   mod_lua-2.4.56-1.amzn2023.x86_64
+
+aws_instance.http_servers (remote-exec): Complete!
+aws_instance.http_servers (remote-exec): Redirecting to /bin/systemctl start httpd.service
+aws_instance.http_servers (remote-exec): Welcome to in28minutes - Virtual Server is at ec2-18-220-14-113.us-east-2.compute.amazonaws.com
+aws_instance.http_servers: Creation complete after 52s [id=i-0b66602183f03b27d]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 Outputs:
 
 aws_security_group_http_server_details = {
-  "arn" = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-0c8ba7b263a0505e1"
+  "arn" = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-07865e69310aed24e"
   "description" = "Managed by Terraform"
   "egress" = toset([
     {
@@ -643,7 +655,7 @@ aws_security_group_http_server_details = {
       "to_port" = 0
     },
   ])
-  "id" = "sg-0c8ba7b263a0505e1"
+  "id" = "sg-07865e69310aed24e"
   "ingress" = toset([
     {
       "cidr_blocks" = tolist([
@@ -686,15 +698,11 @@ aws_security_group_http_server_details = {
   "vpc_id" = "vpc-0c867cff15e80e304"
 }
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ 
-
-
-<h1> **************************************************** </h1>
-<h2> Terraform Destroy </h2>
-
+<h2> Destroy </h2>
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ terraform destroy
+aws_security_group.http_server_sg: Refreshing state... [id=sg-07865e69310aed24e]
 aws_default_vpc.default: Refreshing state... [id=vpc-0c867cff15e80e304]
-aws_security_group.http_server_sg: Refreshing state... [id=sg-0c8ba7b263a0505e1]
-aws_instance.http_servers: Refreshing state... [id=i-07144718fa3548d2c]
+aws_instance.http_servers: Refreshing state... [id=i-0b66602183f03b27d]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
@@ -727,7 +735,7 @@ Terraform will perform the following actions:
   # aws_instance.http_servers will be destroyed
   - resource "aws_instance" "http_servers" {
       - ami                                  = "ami-01103fb68b3569475" -> null
-      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:instance/i-07144718fa3548d2c" -> null
+      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:instance/i-0b66602183f03b27d" -> null
       - associate_public_ip_address          = true -> null
       - availability_zone                    = "us-east-2a" -> null
       - cpu_core_count                       = 1 -> null
@@ -737,20 +745,20 @@ Terraform will perform the following actions:
       - ebs_optimized                        = false -> null
       - get_password_data                    = false -> null
       - hibernation                          = false -> null
-      - id                                   = "i-07144718fa3548d2c" -> null
+      - id                                   = "i-0b66602183f03b27d" -> null
       - instance_initiated_shutdown_behavior = "stop" -> null
       - instance_state                       = "running" -> null
       - instance_type                        = "t2.micro" -> null
       - ipv6_address_count                   = 0 -> null
       - ipv6_addresses                       = [] -> null
-      - key_name                             = "default-key" -> null
+      - key_name                             = "terraform-key" -> null
       - monitoring                           = false -> null
       - placement_partition_number           = 0 -> null
-      - primary_network_interface_id         = "eni-0413911969ae1616e" -> null
-      - private_dns                          = "ip-172-31-7-195.us-east-2.compute.internal" -> null
-      - private_ip                           = "172.31.7.195" -> null
-      - public_dns                           = "ec2-18-188-17-170.us-east-2.compute.amazonaws.com" -> null
-      - public_ip                            = "18.188.17.170" -> null
+      - primary_network_interface_id         = "eni-053c1b1dd34794888" -> null
+      - private_dns                          = "ip-172-31-9-73.us-east-2.compute.internal" -> null
+      - private_ip                           = "172.31.9.73" -> null
+      - public_dns                           = "ec2-18-220-14-113.us-east-2.compute.amazonaws.com" -> null
+      - public_ip                            = "18.220.14.113" -> null
       - secondary_private_ips                = [] -> null
       - security_groups                      = [
           - "http_server_sg",
@@ -762,7 +770,7 @@ Terraform will perform the following actions:
       - tenancy                              = "default" -> null
       - user_data_replace_on_change          = false -> null
       - vpc_security_group_ids               = [
-          - "sg-0c8ba7b263a0505e1",
+          - "sg-07865e69310aed24e",
         ] -> null
 
       - capacity_reservation_specification {
@@ -807,7 +815,7 @@ Terraform will perform the following actions:
           - iops                  = 3000 -> null
           - tags                  = {} -> null
           - throughput            = 125 -> null
-          - volume_id             = "vol-0cc468169299fd4d5" -> null
+          - volume_id             = "vol-0ff4d5da5e5cbd288" -> null
           - volume_size           = 8 -> null
           - volume_type           = "gp3" -> null
         }
@@ -815,7 +823,7 @@ Terraform will perform the following actions:
 
   # aws_security_group.http_server_sg will be destroyed
   - resource "aws_security_group" "http_server_sg" {
-      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-0c8ba7b263a0505e1" -> null
+      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-07865e69310aed24e" -> null
       - description            = "Managed by Terraform" -> null
       - egress                 = [
           - {
@@ -832,7 +840,7 @@ Terraform will perform the following actions:
               - to_port          = 0
             },
         ] -> null
-      - id                     = "sg-0c8ba7b263a0505e1" -> null
+      - id                     = "sg-07865e69310aed24e" -> null
       - ingress                = [
           - {
               - cidr_blocks      = [
@@ -877,7 +885,7 @@ Plan: 0 to add, 0 to change, 3 to destroy.
 
 Changes to Outputs:
   - aws_security_group_http_server_details = {
-      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-0c8ba7b263a0505e1"
+      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-07865e69310aed24e"
       - description            = "Managed by Terraform"
       - egress                 = [
           - {
@@ -894,7 +902,7 @@ Changes to Outputs:
               - to_port          = 0
             },
         ]
-      - id                     = "sg-0c8ba7b263a0505e1"
+      - id                     = "sg-07865e69310aed24e"
       - ingress                = [
           - {
               - cidr_blocks      = [
@@ -944,13 +952,13 @@ Do you really want to destroy all resources?
   Enter a value: yes
 
 aws_default_vpc.default: Destroying... [id=vpc-0c867cff15e80e304]
+aws_instance.http_servers: Destroying... [id=i-0b66602183f03b27d]
 aws_default_vpc.default: Destruction complete after 0s
-aws_instance.http_servers: Destroying... [id=i-07144718fa3548d2c]
-aws_instance.http_servers: Still destroying... [id=i-07144718fa3548d2c, 10s elapsed]
-aws_instance.http_servers: Still destroying... [id=i-07144718fa3548d2c, 20s elapsed]
-aws_instance.http_servers: Still destroying... [id=i-07144718fa3548d2c, 30s elapsed]
-aws_instance.http_servers: Destruction complete after 31s
-aws_security_group.http_server_sg: Destroying... [id=sg-0c8ba7b263a0505e1]
+aws_instance.http_servers: Still destroying... [id=i-0b66602183f03b27d, 10s elapsed]
+aws_instance.http_servers: Still destroying... [id=i-0b66602183f03b27d, 20s elapsed]
+aws_instance.http_servers: Still destroying... [id=i-0b66602183f03b27d, 30s elapsed]
+aws_instance.http_servers: Destruction complete after 30s
+aws_security_group.http_server_sg: Destroying... [id=sg-07865e69310aed24e]
 aws_security_group.http_server_sg: Destruction complete after 1s
 
 Destroy complete! Resources: 3 destroyed.
@@ -959,10 +967,4 @@ mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$
 
 
 
-
 </pre>
-
-
-![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_EC2_instance/ksnip_20231018-091224.png "msahsan1@gmail.com")
-![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_EC2_instance/ksnip_20231018-091248.png "msahsan1@gmail.com")
-![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_EC2_instance/ksnip_20231018-091257.png "msahsan1@gmail.com")

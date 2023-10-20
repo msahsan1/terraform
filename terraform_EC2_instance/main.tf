@@ -39,7 +39,7 @@ resource "aws_security_group" "http_server_sg" {
 
 resource "aws_instance" "http_servers" {
   ami                    = "ami-01103fb68b3569475"
-  key_name               = "default-ec2"
+  key_name               = "terraform-key"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
   subnet_id              = "subnet-0d807dc28683ac161"
@@ -50,7 +50,7 @@ resource "aws_instance" "http_servers" {
     type        = "ssh"
     host        = self.public_ip
     user        = "ec2-user"
-    private_key = file(var.aws_key_pair)
+    private_key = file("./terraform-key.pem")
   }
 
   provisioner "remote-exec" {
