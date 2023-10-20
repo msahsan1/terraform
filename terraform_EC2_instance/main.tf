@@ -35,15 +35,30 @@ resource "aws_security_group" "http_server_sg" {
   tags = {
     name = "http_server_sg"
   }
-
 }
 
 resource "aws_instance" "http_servers" {
-  ami                   = "ami-01103fb68b3569475"
-  key_name               = "default-key"
+  ami                    = "ami-01103fb68b3569475"
+  key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
-  subnet_id = "subnet-0d807dc28683ac161"
+  subnet_id              = "subnet-0d807dc28683ac161"
+
+
+
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file(var.aws_key_pair)
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum install httpd -y",
+      "sudo service httpd start",
+      "echo Welcome to in28minutes - Virtual Server is at ${self.public_dns} | sudo tee /var/www/html/index.html"
+    ]
+  }
 
 }
-
