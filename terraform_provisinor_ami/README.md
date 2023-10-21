@@ -1,6 +1,102 @@
  <pre>
 <h2> TerraForm Provision HTTP server </h2>
 
+
+<b>mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ cat main.tf </b>
+provider "aws" {
+  region = "us-east-2"
+}
+
+resource "aws_default_vpc" "default" {
+
+}
+
+
+data "aws_subnets" "default_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [aws_default_vpc.default.id]
+  }
+}
+
+data "aws_ami" "aws_linux_2_latest" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*"]
+  }
+}
+
+data "aws_ami_ids" "aws_linux_2_latest_ids" {
+  owners = ["amazon"]
+}
+
+
+
+resource "aws_security_group" "http_server_sg" {
+  name = "http_server_sg"
+  ##vpc_id = "vpc-0c867cff15e80e304"
+  vpc_id = aws_default_vpc.default.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    name = "http_server_sg"
+  }
+}
+
+resource "aws_instance" "http_servers" {
+##ami                    = "ami-01103fb68b3569475"
+  ami                    = data.aws_ami.aws_linux_2_latest.id
+  key_name               = "terraform-key"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.http_server_sg.id]
+  // subnet_id              = "subnet-0d807dc28683ac161"
+  //   subnet_id = data.aws_subnets.default_subnets.ids[0]
+  subnet_id = data.aws_subnets.default_subnets.ids[0]
+
+
+
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("./terraform-key.pem")
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum install httpd -y",
+      "sudo service httpd start",
+      "echo Welcome to in28minutes - Virtual Server is at ${self.public_dns} | sudo tee /var/www/html/index.html"
+    ]
+  }
+
+}
+mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ 
+
+
+
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ terraform plan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -963,6 +1059,282 @@ aws_security_group.http_server_sg: Destruction complete after 1s
 
 Destroy complete! Resources: 3 destroyed.
 mahsan@vmmint:~/NewGit/terraform/terraform_EC2_instance$ 
+
+<h2> Destroy </h2>
+
+
+mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ terraform destroy
+data.aws_ami_ids.aws_linux_2_latest_ids: Reading...
+aws_default_vpc.default: Refreshing state... [id=vpc-0c867cff15e80e304]
+data.aws_ami.aws_linux_2_latest: Reading...
+data.aws_ami.aws_linux_2_latest: Read complete after 0s [id=ami-08b880b2d952935ec]
+data.aws_subnets.default_subnets: Reading...
+aws_security_group.http_server_sg: Refreshing state... [id=sg-010527dd40f7cd0e4]
+data.aws_subnets.default_subnets: Read complete after 0s [id=us-east-2]
+aws_instance.http_servers: Refreshing state... [id=i-0e4ac70b02c7f3818]
+data.aws_ami_ids.aws_linux_2_latest_ids: Read complete after 5s [id=3130646356]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_default_vpc.default will be destroyed
+  - resource "aws_default_vpc" "default" {
+      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:vpc/vpc-0c867cff15e80e304" -> null
+      - assign_generated_ipv6_cidr_block     = false -> null
+      - cidr_block                           = "172.31.0.0/16" -> null
+      - default_network_acl_id               = "acl-09d30acb33996e81a" -> null
+      - default_route_table_id               = "rtb-015d742020cb7cc60" -> null
+      - default_security_group_id            = "sg-04e04295a2cc4a9aa" -> null
+      - dhcp_options_id                      = "dopt-094c63531b0751a2a" -> null
+      - enable_dns_hostnames                 = true -> null
+      - enable_dns_support                   = true -> null
+      - enable_network_address_usage_metrics = false -> null
+      - existing_default_vpc                 = true -> null
+      - force_destroy                        = false -> null
+      - id                                   = "vpc-0c867cff15e80e304" -> null
+      - instance_tenancy                     = "default" -> null
+      - ipv6_netmask_length                  = 0 -> null
+      - main_route_table_id                  = "rtb-015d742020cb7cc60" -> null
+      - owner_id                             = "954854060441" -> null
+      - tags                                 = {} -> null
+      - tags_all                             = {} -> null
+    }
+
+  # aws_instance.http_servers will be destroyed
+  - resource "aws_instance" "http_servers" {
+      - ami                                  = "ami-08b880b2d952935ec" -> null
+      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:instance/i-0e4ac70b02c7f3818" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-2a" -> null
+      - cpu_core_count                       = 1 -> null
+      - cpu_threads_per_core                 = 1 -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-0e4ac70b02c7f3818" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t2.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "terraform-key" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-009b9031922e04359" -> null
+      - private_dns                          = "ip-172-31-2-211.us-east-2.compute.internal" -> null
+      - private_ip                           = "172.31.2.211" -> null
+      - public_dns                           = "ec2-3-142-131-62.us-east-2.compute.amazonaws.com" -> null
+      - public_ip                            = "3.142.131.62" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "http_server_sg",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-0d807dc28683ac161" -> null
+      - tags                                 = {} -> null
+      - tags_all                             = {} -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-010527dd40f7cd0e4",
+        ] -> null
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 1 -> null
+        }
+
+      - credit_specification {
+          - cpu_credits = "standard" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 1 -> null
+          - http_tokens                 = "optional" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/xvda" -> null
+          - encrypted             = false -> null
+          - iops                  = 100 -> null
+          - tags                  = {} -> null
+          - throughput            = 0 -> null
+          - volume_id             = "vol-06057c9b9b2af0153" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp2" -> null
+        }
+    }
+
+  # aws_security_group.http_server_sg will be destroyed
+  - resource "aws_security_group" "http_server_sg" {
+      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-010527dd40f7cd0e4" -> null
+      - description            = "Managed by Terraform" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+        ] -> null
+      - id                     = "sg-010527dd40f7cd0e4" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+        ] -> null
+      - name                   = "http_server_sg" -> null
+      - owner_id               = "954854060441" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "name" = "http_server_sg"
+        } -> null
+      - tags_all               = {
+          - "name" = "http_server_sg"
+        } -> null
+      - vpc_id                 = "vpc-0c867cff15e80e304" -> null
+    }
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Changes to Outputs:
+  - aws_security_group_http_server_details = {
+      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-010527dd40f7cd0e4"
+      - description            = "Managed by Terraform"
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+        ]
+      - id                     = "sg-010527dd40f7cd0e4"
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 80
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 80
+            },
+        ]
+      - name                   = "http_server_sg"
+      - name_prefix            = ""
+      - owner_id               = "954854060441"
+      - revoke_rules_on_delete = false
+      - tags                   = {
+          - name = "http_server_sg"
+        }
+      - tags_all               = {
+          - name = "http_server_sg"
+        }
+      - timeouts               = null
+      - vpc_id                 = "vpc-0c867cff15e80e304"
+    } -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_instance.http_servers: Destroying... [id=i-0e4ac70b02c7f3818]
+aws_instance.http_servers: Still destroying... [id=i-0e4ac70b02c7f3818, 10s elapsed]
+aws_instance.http_servers: Still destroying... [id=i-0e4ac70b02c7f3818, 20s elapsed]
+aws_instance.http_servers: Still destroying... [id=i-0e4ac70b02c7f3818, 30s elapsed]
+aws_instance.http_servers: Still destroying... [id=i-0e4ac70b02c7f3818, 40s elapsed]
+aws_instance.http_servers: Destruction complete after 40s
+aws_security_group.http_server_sg: Destroying... [id=sg-010527dd40f7cd0e4]
+aws_security_group.http_server_sg: Destruction complete after 1s
+aws_default_vpc.default: Destroying... [id=vpc-0c867cff15e80e304]
+aws_default_vpc.default: Destruction complete after 0s
+
+Destroy complete! Resources: 3 destroyed.
+mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ 
+
 
 
 
