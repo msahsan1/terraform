@@ -31,3 +31,4 @@ digraph {
 mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ 
 
 </pre>
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform_provisinor_ami/ksnip_20231021-110717.png "msahsan1@gmail.com")
