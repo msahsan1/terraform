@@ -1,3 +1,5 @@
+<pre>
+<h2> Terraform Graph </h2>
  mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ terraform graph
 digraph {
 	compound = "true"
@@ -28,4 +30,4 @@ digraph {
 
 mahsan@vmmint:~/NewGit/terraform/terraform_provisinor_ami$ 
 
-
+</pre>
