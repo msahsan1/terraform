@@ -1,4 +1,5 @@
 <pre>
+<h2> Terraform Module </h2>
 
 drwxrwxr-x 3 mahsan mahsan  4096 Oct 22 09:06 terraform_provisinor_multiple_https
 drwxrwxr-x 4 mahsan mahsan  4096 Oct 23 10:45 terraform-msa-module
@@ -16,8 +17,6 @@ terraform-msa-module
 5 directories, 3 files
 mahsan@vmmint:~/NewGit/terraform$ 
 
-
-</pre>
 
 mahsan@vmmint:~/NewGit/terraform/terraform-msa-module/projects/A$ terraform init
 
@@ -108,4 +107,4 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 now.
 mahsan@vmmint:~/NewGit/terraform/terraform-msa-module/projects/A$ 
 
-
+</pre>
