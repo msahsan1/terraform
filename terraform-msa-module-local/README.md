@@ -356,5 +356,5 @@ mahsan@vmmint:~/NewGit/terraform/terraform-msa-module-
 
 
 ![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform-msa-module-local/ksnip_20231023-151743.png "msahsan1@gmail.com")
-![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform-msa-module-local/kksnip_20231023-151807.png "msahsan1@gmail.com")
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform-msa-module-local/ksnip_20231023-151807.png "msahsan1@gmail.com")
 
