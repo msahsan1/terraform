@@ -307,6 +307,178 @@ Outputs:
 sg_id_output = "sg-0064d3e9fc0e5de68"
 mahsan@vmmint:~/NewGit/terraform/terraform-msa-module-output/projects/C$ 
 
+<h2> Destroy </h2>
+
+ahsan@vmmint:~/NewGit/terraform/terraform-msa-module-output/projects/C$ terraform destroy
+module.sgmodule.aws_security_group.ec2-sg: Refreshing state... [id=sg-0064d3e9fc0e5de68]
+aws_instance.web: Refreshing state... [id=i-04f8a88c56e873b1d]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_instance.web will be destroyed
+  - resource "aws_instance" "web" {
+      - ami                                  = "ami-01103fb68b3569475" -> null
+      - arn                                  = "arn:aws:ec2:us-east-2:954854060441:instance/i-04f8a88c56e873b1d" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-2b" -> null
+      - cpu_core_count                       = 1 -> null
+      - cpu_threads_per_core                 = 2 -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-04f8a88c56e873b1d" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t3.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-0682e642958b0cf82" -> null
+      - private_dns                          = "ip-172-31-25-118.us-east-2.compute.internal" -> null
+      - private_ip                           = "172.31.25.118" -> null
+      - public_dns                           = "ec2-3-142-51-60.us-east-2.compute.amazonaws.com" -> null
+      - public_ip                            = "3.142.51.60" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [
+          - "myec2-sg",
+        ] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-03852e1095ae7efbc" -> null
+      - tags                                 = {} -> null
+      - tags_all                             = {} -> null
+      - tenancy                              = "default" -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-0064d3e9fc0e5de68",
+        ] -> null
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 2 -> null
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/xvda" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-075fbf888ba562082" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+        }
+    }
+
+  # module.sgmodule.aws_security_group.ec2-sg will be destroyed
+  - resource "aws_security_group" "ec2-sg" {
+      - arn                    = "arn:aws:ec2:us-east-2:954854060441:security-group/sg-0064d3e9fc0e5de68" -> null
+      - description            = "Managed by Terraform" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+        ] -> null
+      - id                     = "sg-0064d3e9fc0e5de68" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "Allow Inbound from Secret Application"
+              - from_port        = 8433
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 8433
+            },
+        ] -> null
+      - name                   = "myec2-sg" -> null
+      - owner_id               = "954854060441" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {} -> null
+      - vpc_id                 = "vpc-0c867cff15e80e304" -> null
+    }
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+Changes to Outputs:
+  - sg_id_output = "sg-0064d3e9fc0e5de68" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_instance.web: Destroying... [id=i-04f8a88c56e873b1d]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 10s elapsed]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 20s elapsed]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 30s elapsed]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 40s elapsed]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 50s elapsed]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 1m0s elapsed]
+aws_instance.web: Still destroying... [id=i-04f8a88c56e873b1d, 1m10s elapsed]
+aws_instance.web: Destruction complete after 1m11s
+module.sgmodule.aws_security_group.ec2-sg: Destroying... [id=sg-0064d3e9fc0e5de68]
+module.sgmodule.aws_security_group.ec2-sg: Destruction complete after 1s
+
+Destroy complete! Resources: 2 destroyed.
+mahsan@vmmint:~/NewGit/terraform/terraform-msa-module-output/projects/C$ 
+
+
+
+
 </pre>
 
 ![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform-msa-module-output/ksnip_20231023-215934.png "msahsan1@gmail.com" )
