@@ -307,9 +307,8 @@ Outputs:
 sg_id_output = "sg-0064d3e9fc0e5de68"
 mahsan@vmmint:~/NewGit/terraform/terraform-msa-module-output/projects/C$ 
 
-
-
-
-
-
 </pre>
+
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform-msa-module-output/ksnip_20231023-215934.png "msahsan1@gmail.com" )
+![Alt text](https://github.com/msahsan1/terraform/blob/main/terraform-msa-module-output/ksnip_20231023-220023.png "msahsan1@gmail.com")
+
