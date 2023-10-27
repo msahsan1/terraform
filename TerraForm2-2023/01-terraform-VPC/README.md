@@ -127,6 +127,8 @@ Outputs:
 vpc_cidr = "10.0.0.0/16"
 mahsan@vmmint:~/NewGit/terraform/TerraForm2-2023/01-terraform-VPC$ 
 
+<h2> Destroy <h2>
+
 hsan@vmmint:~/NewGit/terraform/TerraForm2-2023/01-terraform-VPC$ terraform destroy
 aws_vpc.my_vpc: Refreshing state... [id=vpc-08d927d16fa695634]
 
